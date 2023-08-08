@@ -17,15 +17,17 @@ For a complete list of dependencies, refer to the `requirements.txt` file.
 ## Environment Configuration
 You can configure the behavior of the application using the following environment variables:
 
-DEBUG=1                               # Enables debug mode (0 for production)
-SECRET_KEY=foo                        # Secret key for your Django application
-SQL_ENGINE=django.db.backends.postgresql # if not specified uses as default sqllite engine
-POSTGRES_DB=postres_database_name     # Your Database name
-POSTGRES_USER=postgres_yser_name      # Your PostgreSQL user
-POSTGRES_PASSWORD=*****               # Your PostgreSQL user's password
-SQL_HOST=db                           # Hostname for the PostgreSQL database
-SQL_PORT=5432                         # Port number for the PostgreSQL database
-DATABASE=postgres                     # Database type (Keep as 'postgres' for this setup)
+| Variable             | Description                                       | Example                                      |
+|----------------------|---------------------------------------------------|----------------------------------------------|
+| `DEBUG`              | Enables debug mode (0 for production)             | `1`                                          |
+| `SECRET_KEY`         | Secret key for your Django application            | `foo`                                        |
+| `SQL_ENGINE`         | DB engine (default is sqllite if not specified)   | `django.db.backends.postgresql`              |
+| `POSTGRES_DB`        | Your Database name                                | `postres_database_name`                      |
+| `POSTGRES_USER`      | Your PostgreSQL user                              | `postgres_user_name`                         |
+| `POSTGRES_PASSWORD`  | Your PostgreSQL user's password                   | `*****`                                      |
+| `SQL_HOST`           | Hostname for the PostgreSQL database              | `db`                                         |
+| `SQL_PORT`           | Port number for the PostgreSQL database           | `5432`                                       |
+| `DATABASE`           | Database type (Keep as 'postgres' for this setup) | `postgres`                                   |
 
 
 ## Initial Setup and Installation
