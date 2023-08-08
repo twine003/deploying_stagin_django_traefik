@@ -118,7 +118,7 @@ If you wish to contribute to the project, please follow the contribution guideli
 
 ## License
 
-This project is licensed under the [MIT License](LINK_TO_YOUR_LICENSE) - see the [LICENSE.md](LINK_TO_YOUR_LICENSE_FILE) file for details.
+This project is licensed under the [MIT License](https://github.com/twine003/django_postgres_devcontainer/blob/main/LICENSE) - see the [LICENSE.md](https://github.com/twine003/django_postgres_devcontainer/blob/main/LICENSE) file for details.
 
 ## Contact
 
