@@ -24,6 +24,15 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
+  - name: Print environment variables
+    run: | 
+      env
+
+    - name: Setup environment variables
+      run: |
+        chmod +x ./setup_env.sh
+        ./setup_env.sh
+
     - name: Build images
       run: | 
         export IMAGE=ghcr.io/${{ github.repository }}/${{ github.sha }}
