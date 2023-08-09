@@ -11,9 +11,9 @@ echo "POSTGRES_USER=$SQL_USER" >> .env
 echo "POSTGRES_PASSWORD=$SQL_PASSWORD" >> .env
 echo "SQL_HOST=db" >> .env
 echo "SQL_PORT=$SQL_PORT" >> .env
-echo "WEB_IMAGE=${{ env.IMAGE:web" >> .env
-echo "NGINX_IMAGE=${{ env.IMAGE:nginx" >> .env 
-echo "TRAEFIK_IMAGE=${{ env.IMAGE:traefik" >> .env
+echo "WEB_IMAGE=$IMAGE:web" >> .env
+echo "NGINX_IMAGE=$IMAGE:nginx" >> .env 
+echo "TRAEFIK_IMAGE=$IMAGE:traefik" >> .env
 
 echo "ID_COMPILACION=$GITHUB_SHA" >> .env  
 echo "CI_REGISTRY_USER=$REGISTRY_USER" >> .env
