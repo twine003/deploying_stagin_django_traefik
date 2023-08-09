@@ -26,9 +26,7 @@ jobs:
 
     - name: Print environment variables
       run: | 
-        export IMAGE=ghcr.io/${{ github.repository }}/${{ github.sha }}
-        export DEBUG=${{ secrets.DEBUG }}
-        echo "IMAGE = $IMAGE DEBUG = $DEBUG"
+        env
         
     - name: Setup environment variables
       run: |
@@ -48,8 +46,6 @@ jobs:
         export CI_REGISTRY_USER=${{ secrets.REGISTRY_USER }}
         export CI_JOB_TOKEN=${{ secrets.REGISTRY_PASSWORD }}
         export CI_REGISTRY=${{ secrets.REGISTRY_URL }}
-        export IMAGE=${{ secrets.REGISTRY_URL }}/$GITHUB_REPOSITORY
-        
         chmod +x ./setup_env.sh
         ./setup_env.sh
 
