@@ -26,6 +26,7 @@ jobs:
 
     - name: Print environment variables
       run: | 
+        export IMAGE=ghcr.io/${{ github.repository }}/${{ github.sha }}
         echo "${{ secrets.DEBUG }}"
         echo "${{ secrets.RESPOSITORIO_PRIMER_SECRETO }}"
         echo "${{ vars.REPOSITORIO_PRIMERA_VARIABLE }}"
@@ -37,7 +38,6 @@ jobs:
 
     - name: Build images
       run: | 
-        export IMAGE=ghcr.io/${{ github.repository }}/${{ github.sha }}
         export WEB_IMAGE=$IMAGE:web
         export NGINX_IMAGE=$IMAGE:nginx
         export TRAEFIK_IMAGE=$IMAGE:traefik
