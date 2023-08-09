@@ -1,6 +1,6 @@
 #!/bin/sh
 
-echo "DEBUG=${{ secrets.DEBUG }}" >> .env
+echo "DEBUG=$DEBUG" >> .env
 echo "SQL_ENGINE=django.db.backends.postgresql" >> .env 
 echo "DATABASE=postgres" >> .env
 
