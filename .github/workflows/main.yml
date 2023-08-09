@@ -26,8 +26,10 @@ jobs:
 
     - name: Print environment variables
       run: | 
-        printenv
-
+        echo "${{ secrets.DEBUG }}"
+        echo "${{ secrets.RESPOSITORIO_PRIMER_SECRETO }}"
+        echo "${{ vars.REPOSITORIO_PRIMERA_VARIABLE }}"
+        
     - name: Setup environment variables
       run: |
         chmod +x ./setup_env.sh
