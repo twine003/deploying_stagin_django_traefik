@@ -24,9 +24,9 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-  - name: Print environment variables
-    run: | 
-      env
+    - name: Print environment variables
+      run: | 
+        env
 
     - name: Setup environment variables
       run: |
