@@ -1,0 +1,64 @@
+version: "3.8"
+
+services:
+  web:
+    build:
+      context: ./app
+      dockerfile: Dockerfile.prod
+      cache_from:
+        - "${WEB_IMAGE}"
+    image: "${WEB_IMAGE}"
+    command: gunicorn conf.wsgi:application --bind 0.0.0.0:8000
+    volumes:
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
+    expose:
+      - 8000
+    env_file: .env
+   
+
+  nginx:
+    build:
+      context: ./nginx
+      cache_from:
+        - "${NGINX_IMAGE}"
+    image: "${NGINX_IMAGE}"
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    ports:
+      - 80:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.yourdomain.rule=Host(`yourdomain.com`)"
+      - "traefik.http.routers.yourdomain.entrypoints=websecure"
+      - "traefik.http.routers.yourdomain.tls.certresolver=myresolver"
+    depends_on:
+      - web
+  
+  traefik:
+    build:
+      context: ./traefik
+      cache_from:
+        - "${TRAEFIK_IMAGE}"
+    image: "${TRAEFIK_IMAGE}"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--accesslog=true"
+      - "--accesslog.filepath=/logs/access.log"
+      
+    ports:
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+      - "./traefik_logs:/logs"
+  
+volumes:
+  static_volume:
+  media_volume:
+  traefik-public-certificates:
