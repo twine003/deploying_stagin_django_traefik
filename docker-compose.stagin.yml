@@ -1,0 +1,74 @@
+version: "3.8"
+
+services:
+  web:
+    image: "${WEB_IMAGE}"
+    command: sh -c "gunicorn conf.wsgi:application --bind 0.0.0.0:8000 & celery -A conf worker -l info --beat"
+    volumes:
+      - static_volume:/usr/src/app/static
+      - media_volume:/usr/src/app/media
+    expose:
+      - 8000:8000
+    env_file: .env
+    depends_on:
+      - db
+      - rabbitmq
+
+  nginx:
+    image: "${NGINX_IMAGE}"
+    volumes:
+      - static_volume:/usr/src/app/staticfiles
+      - media_volume:/usr/src/app/mediafiles
+    ports:
+      - 80:80
+    labels:
+      - "traefik.enable=true"
+      - "traefik.http.routers.capitli.rule=Host(`yourdomain.com`, `www.yourdomain.com`)"
+      - "traefik.http.routers.capitli.entrypoints=websecure"  
+      - "traefik.http.routers.capitli.tls.certresolver=myresolver"
+      - "traefik.http.routers.capitli.middlewares=redirectIP@docker"
+    depends_on:
+      - web
+
+  traefik:
+    image: "${TRAEFIK_IMAGE}"
+    command:
+      - "--api.insecure=true"
+      - "--providers.docker=true"
+      - "--providers.docker.exposedbydefault=false"
+      - "--entrypoints.websecure.address=:443"
+      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
+      - "--certificatesresolvers.myresolver.acme.email=your_email@yourdomain.com"
+      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--accesslog=true"
+      - "--accesslog.filepath=/logs/access.log"
+      
+    ports:
+      - "8080:8080"
+      - "443:443"
+    volumes:
+      - "/var/run/docker.sock:/var/run/docker.sock:ro"
+      - "./letsencrypt:/letsencrypt"
+      - "./traefik_logs:/logs"
+
+
+  db:
+    image: postgres:13-alpine
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+    env_file: .env
+
+  rabbitmq:
+    image: rabbitmq:3.8
+    hostname: rabbitmq
+    ports:
+      - "5672:5672"  # Puerto para la comunicación con Celery
+      - "15672:15672" # Puerto para la administración de Celery
+    environment:
+      - RABBITMQ_DEFAULT_USER=guest
+      - RABBITMQ_DEFAULT_PASS=guest 
+
+volumes:
+  static_volume:
+  media_volume:
+  postgres_data:
