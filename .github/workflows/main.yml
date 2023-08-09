@@ -27,7 +27,6 @@ jobs:
     - name: Print environment variables
       run: | 
         printenv
-        env
 
     - name: Setup environment variables
       run: |
