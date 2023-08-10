@@ -48,6 +48,8 @@ jobs:
 
     - name: Build images
       run: | 
+        ls
+        pwd
         docker-compose -f docker-compose.ci.yml build
         docker push $WEB_IMAGE
         docker push $NGINX_IMAGE
