@@ -19,9 +19,9 @@ jobs:
         POSTGRES_PASSWORD: ${{ secrets.SQL_PASSWORD }}
         SQL_HOST: db
         SQL_PORT: ${{ secrets.SQL_PORT }}
-        WEB_IMAGE: ${{ env.IMAGE }}:web
-        NGINX_IMAGE: ${{ env.IMAGE }}:nginx 
-        TRAEFIK_IMAGE: ${{ env.IMAGE }}:traefik
+        WEB_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:web
+        NGINX_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:nginx 
+        TRAEFIK_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:traefik
         ID_COMPILACION: $GITHUB_SHA
 
     runs-on: ubuntu-latest
@@ -45,7 +45,7 @@ jobs:
         ./setup_env.sh
         cat ./.env
 
-    - name: Build images
+    - name: c
       run: |
         echo "WEB_IMAGE = ${{ env.WEB_IMAGE }}"
 
