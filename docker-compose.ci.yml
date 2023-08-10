@@ -4,7 +4,7 @@ services:
   web:
     build:
       context: ./app
-      dockerfile: Dockerfile.prod
+      dockerfile: Dockerfile
       cache_from:
         - "${WEB_IMAGE}"
     image: "${WEB_IMAGE}"
