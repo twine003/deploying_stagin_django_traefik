@@ -46,7 +46,7 @@ jobs:
 
     - name: Build images
       run: |
-        echo "docker push $WEB_IMAGE $NGINX_IMAGE $TRAEFIK_IMAGE"
+        echo "docker push ${{ env.WEB_IMAGE }}"
 
   deploy:
 

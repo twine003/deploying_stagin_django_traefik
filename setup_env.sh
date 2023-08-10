@@ -6,9 +6,9 @@ echo "DATABASE=postgres" >> .env
 
 echo "SERVER_IP=$SERVER_IP" >> .env
 echo "SITE_URL=$SITE_URL" >> .env
-echo "POSTGRES_DB=$SQL_DATABASE" >> .env
-echo "POSTGRES_USER=$SQL_USER" >> .env
-echo "POSTGRES_PASSWORD=$SQL_PASSWORD" >> .env
+echo "POSTGRES_DB=$POSTGRES_DB" >> .env
+echo "POSTGRES_USER=$POSTGRES_USER" >> .env
+echo "POSTGRES_PASSWORD=$POSTGRES_PASSWORD" >> .env
 echo "SQL_HOST=db" >> .env
 echo "SQL_PORT=$SQL_PORT" >> .env
 
