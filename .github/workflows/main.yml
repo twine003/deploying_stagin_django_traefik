@@ -24,10 +24,6 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.GITHUB_TOKEN }}
 
-    - name: Print environment variables
-      run: | 
-        env
-        
     - name: Setup environment variables
       run: |
         export IMAGE=ghcr.io/${{ github.repository }}/${{ github.sha }}
@@ -47,10 +43,9 @@ jobs:
         ./setup_env.sh
 
     - name: Build images
-      run: | 
-        ls
-        pwd
+      run: |
         docker-compose -f docker-compose.ci.yml build
+        echo "docker push $WEB_IMAGE $NGINX_IMAGE $TRAEFIK_IMAGE"
         docker push $WEB_IMAGE
         docker push $NGINX_IMAGE
         docker push $TRAEFIK_IMAGE
