@@ -9,6 +9,21 @@ jobs:
 
   build:
 
+    env:
+        IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}
+        DEBUG: ${{ secrets.DEBUG }}
+        SITE_URL: ${{ secrets.SITE_URL }}
+        POSTGRES_DB: ${{ secrets.SQL_DATABASE }}
+        POSTGRES_USER: ${{ secrets.SQL_USER }}
+        SERVER_IP: ${{ secrets.SERVER_IP }}
+        POSTGRES_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+        SQL_HOST: db
+        SQL_PORT: ${{ secrets.SQL_PORT }}
+        WEB_IMAGE: $IMAGE:web
+        NGINX_IMAGE: $IMAGE:nginx 
+        TRAEFIK_IMAGE: $IMAGE:traefik
+        ID_COMPILACION: $GITHUB_SHA
+
     runs-on: ubuntu-latest
 
     steps:
@@ -25,20 +40,6 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Setup environment variables
-      env:
-        IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}
-        DEBUG: ${{ secrets.DEBUG }}
-        SITE_URL: ${{ secrets.SITE_URL }}
-        POSTGRES_DB: ${{ secrets.SQL_DATABASE }}
-        POSTGRES_USER: ${{ secrets.SQL_USER }}
-        SERVER_IP: ${{ secrets.SERVER_IP }}
-        POSTGRES_PASSWORD: ${{ secrets.SQL_PASSWORD }}
-        SQL_HOST: db
-        SQL_PORT: ${{ secrets.SQL_PORT }}
-        WEB_IMAGE: $IMAGE:web
-        NGINX_IMAGE: $IMAGE:nginx 
-        TRAEFIK_IMAGE: $IMAGE:traefik
-        ID_COMPILACION: $GITHUB_SHA
       run: |
         chmod +x ./setup_env.sh
         ./setup_env.sh
