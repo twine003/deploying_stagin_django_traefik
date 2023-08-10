@@ -41,14 +41,15 @@ jobs:
         export ID_COMPILACION=$GITHUB_SHA
         chmod +x ./setup_env.sh
         ./setup_env.sh
+        cat ./setup_env.sh
 
     - name: Build images
       run: |
-        docker-compose -f docker-compose.ci.yml build
+        # docker-compose -f docker-compose.ci.yml build
         echo "docker push $WEB_IMAGE $NGINX_IMAGE $TRAEFIK_IMAGE"
-        docker push $WEB_IMAGE
-        docker push $NGINX_IMAGE
-        docker push $TRAEFIK_IMAGE
+        # docker push $WEB_IMAGE
+        # docker push $NGINX_IMAGE
+        # docker push $TRAEFIK_IMAGE
 
   deploy:
 
