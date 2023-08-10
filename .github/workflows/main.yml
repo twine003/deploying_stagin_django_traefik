@@ -45,11 +45,7 @@ jobs:
 
     - name: Build images
       run: |
-        # docker-compose -f docker-compose.ci.yml build
         echo "docker push $WEB_IMAGE $NGINX_IMAGE $TRAEFIK_IMAGE"
-        # docker push $WEB_IMAGE
-        # docker push $NGINX_IMAGE
-        # docker push $TRAEFIK_IMAGE
 
   deploy:
 
