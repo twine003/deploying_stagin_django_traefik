@@ -45,9 +45,12 @@ jobs:
         ./setup_env.sh
         cat ./.env
 
-    - name: c
+    - name: Build images
       run: |
-        echo "WEB_IMAGE = ${{ env.WEB_IMAGE }}"
+        docker-compose -f docker-compose.ci.yml build
+        docker push ${{ env.WEB_IMAGE }}
+        docker push ${{ env.NGINX_IMAGE }}
+        docker push ${{ env.TRAEFIK_IMAGE }}
 
   deploy:
 
@@ -65,14 +68,6 @@ jobs:
       with:
         key: ${{ secrets.SERVER_SSH_KEY }}
         name: id_rsa
-
-    - name: Build images2
-      run: |
-        docker-compose -f docker-compose.ci.yml build
-        docker push $WEB_IMAGE
-        docker push $NGINX_IMAGE
-        docker push $TRAEFIK_IMAGE
-        echo "WEB_IMAGE = ${{ env.WEB_IMAGE }}"
         
     - name: Add known hosts  
       run: |
