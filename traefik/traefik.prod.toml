@@ -1,0 +1,59 @@
+[global]
+  checkNewVersion = true
+  sendAnonymousUsage = true
+
+[log]
+  level = "DEBUG"
+
+[accessLog]
+  filePath = "/logs/access.log"
+  format = "json"
+
+[entryPoints]
+  [entryPoints.web]
+    address = ":80"
+    [entryPoints.web.http]
+      [entryPoints.web.http.redirections]
+        [entryPoints.web.http.redirections.entryPoint]
+          to = "websecure"
+          scheme = "https"
+
+  [entryPoints.websecure]
+    address = ":443"
+
+[accessLog]
+
+[api]
+  dashboard = true
+
+[providers]
+  [providers.docker]
+    exposedByDefault = false
+
+
+[certificatesResolvers.myresolver.acme]
+  email = "info@capitli.com"
+  storage = "/letsencrypt/acme.json"
+  [certificatesResolvers.myresolver.acme.httpChallenge]
+    entryPoint = "web"
+    [certificatesResolvers.myresolver.acme.tlsChallenge]
+      # Configuración adicional para el desafío TLS
+      # (Agrega esta línea si deseas habilitar el desafío TLS)
+      # enabled = true
+
+[http.middlewares.redirectIP.redirectRegex]
+  regex = "^http://159\.203\.180\.127(/.*)?"
+  replacement = "https://www.capitli.com/error-page"
+
+[http.middlewares.auth.basicAuth]
+  users = [
+    "testuser:$apr1$jIKW.bdS$eKXe4Lxjgy/rH65wP1iQe1"
+  ]
+
+[http.routers.dashboard]
+  rule = "Host(`www.capitli.com`, `capitli.com`) && (PathPrefix(`/`))"
+  service = "api@internal"
+  middlewares = "auth,redirectIP"
+  entryPoints = ["websecure"]
+  [http.routers.dashboard.tls]
+    certResolver = "myresolver"
