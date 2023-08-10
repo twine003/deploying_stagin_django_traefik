@@ -25,27 +25,28 @@ jobs:
         password: ${{ secrets.GITHUB_TOKEN }}
 
     - name: Setup environment variables
+      env:
+        IMAGE=ghcr.io/${{ github.repository }}/${{ github.sha }}
+        DEBUG=${{ secrets.DEBUG }}
+        SITE_URL=${{ secrets.SITE_URL }}
+        POSTGRES_DB=${{ secrets.SQL_DATABASE }}
+        POSTGRES_USER=${{ secrets.SQL_USER }}
+        SERVER_IP=${{ secrets.SERVER_IP }}
+        POSTGRES_PASSWORD=${{ secrets.SQL_PASSWORD }}
+        SQL_HOST=db
+        SQL_PORT=${{ secrets.SQL_PORT }}
+        WEB_IMAGE=$IMAGE:web
+        NGINX_IMAGE=$IMAGE:nginx 
+        TRAEFIK_IMAGE=$IMAGE:traefik
+        ID_COMPILACION=$GITHUB_SHA
       run: |
-        export IMAGE=ghcr.io/${{ github.repository }}/${{ github.sha }}
-        export DEBUG=${{ secrets.DEBUG }}
-        export SITE_URL=${{ secrets.SITE_URL }}
-        export POSTGRES_DB=${{ secrets.SQL_DATABASE }}
-        export POSTGRES_USER=${{ secrets.SQL_USER }}
-        export SERVER_IP=${{ secrets.SERVER_IP }}
-        export POSTGRES_PASSWORD=${{ secrets.SQL_PASSWORD }}
-        export SQL_HOST=db
-        export SQL_PORT=${{ secrets.SQL_PORT }}
-        export WEB_IMAGE=$IMAGE:web
-        export NGINX_IMAGE=$IMAGE:nginx 
-        export TRAEFIK_IMAGE=$IMAGE:traefik
-        export ID_COMPILACION=$GITHUB_SHA
         chmod +x ./setup_env.sh
         ./setup_env.sh
         cat ./.env
 
     - name: Build images
       run: |
-        echo "docker push ${{ env.WEB_IMAGE }} ${{ env.NGINX_IMAGE }} ${{ env.TRAEFIK_IMAGE }}"
+        echo "docker push $WEB_IMAGE $NGINX_IMAGE $TRAEFIK_IMAGE"
 
   deploy:
 
