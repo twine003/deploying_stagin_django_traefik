@@ -39,6 +39,7 @@ jobs:
         username: ${{ github.actor }}
         password: ${{ secrets.MY_PAT }}
 
+
     - name: Setup environment variables
       run: |
         chmod +x ./setup_env.sh
