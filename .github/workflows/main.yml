@@ -5,24 +5,24 @@ on:
     branches:
       - main
 
+env:
+  IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}
+  DEBUG: ${{ secrets.DEBUG }}
+  SITE_URL: ${{ secrets.SITE_URL }}
+  POSTGRES_DB: ${{ secrets.SQL_DATABASE }}
+  POSTGRES_USER: ${{ secrets.SQL_USER }}
+  SERVER_IP: ${{ secrets.SERVER_IP }}
+  POSTGRES_PASSWORD: ${{ secrets.SQL_PASSWORD }}
+  SQL_HOST: db
+  SQL_PORT: ${{ secrets.SQL_PORT }}
+  WEB_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:web
+  NGINX_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:nginx 
+  TRAEFIK_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:traefik
+  ID_COMPILACION: $GITHUB_SHA
+
 jobs:
 
   build:
-
-    env:
-        IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}
-        DEBUG: ${{ secrets.DEBUG }}
-        SITE_URL: ${{ secrets.SITE_URL }}
-        POSTGRES_DB: ${{ secrets.SQL_DATABASE }}
-        POSTGRES_USER: ${{ secrets.SQL_USER }}
-        SERVER_IP: ${{ secrets.SERVER_IP }}
-        POSTGRES_PASSWORD: ${{ secrets.SQL_PASSWORD }}
-        SQL_HOST: db
-        SQL_PORT: ${{ secrets.SQL_PORT }}
-        WEB_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:web
-        NGINX_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:nginx 
-        TRAEFIK_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:traefik
-        ID_COMPILACION: $GITHUB_SHA
 
     runs-on: ubuntu-latest
 
@@ -77,11 +77,18 @@ jobs:
         name: id_rsa
         known_hosts: ~/.ssh/known_hosts
 
+    - name: Setup environment variables
+      run: |
+        chmod +x ./setup_env.sh
+        ./setup_env.sh
+        cat ./.env
+
     - name: Copy files via SSH
       env:
         SERVER_USER: ${{ secrets.SERVER_USER }}  
         SERVER_IP: ${{ secrets.SERVER_IP }}
       run: | 
+        ls -lsa
         scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.develop.yml ${SERVER_USER}@${SERVER_IP}:/root
 
     - name: Deploy
