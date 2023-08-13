@@ -65,6 +65,7 @@ jobs:
 
     - name: Add known hosts  
       run: |
+        mkdir -p ~/.ssh
         ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
         chmod 644 ~/.ssh/known_hosts
 
