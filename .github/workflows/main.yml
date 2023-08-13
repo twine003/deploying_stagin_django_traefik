@@ -51,6 +51,7 @@ jobs:
         docker-compose -f docker-compose.ci.yml build
         docker push ${{ env.WEB_IMAGE }}
         docker push ${{ env.NGINX_IMAGE }}
+        docker push ${{ env.TRAEFIK_IMAGE }}
 
   deploy:
 
@@ -81,7 +82,7 @@ jobs:
         SERVER_USER: ${{ secrets.SERVER_USER }}  
         SERVER_IP: ${{ secrets.SERVER_IP }}
       run: | 
-        scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.traefik.yml ${SERVER_USER}@${SERVER_IP}:/root
+        scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.develop.yml ${SERVER_USER}@${SERVER_IP}:/root
 
     - name: Deploy
       env:
