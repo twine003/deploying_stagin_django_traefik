@@ -19,6 +19,9 @@ env:
   NGINX_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:nginx 
   TRAEFIK_IMAGE: ghcr.io/${{ github.repository }}/${{ github.sha }}:traefik
   ID_COMPILACION: $GITHUB_SHA
+  CI_REGISTRY_USER:  ${{ github.actor }}
+  CI_JOB_TOKEN: ${{ secrets.MY_PAT }}
+  CI_REGISTRY: ghcr.io
 
 jobs:
 
@@ -35,9 +38,9 @@ jobs:
     - name: Login to GitHub Container Registry
       uses: docker/login-action@v2
       with:
-        registry: ghcr.io
-        username: ${{ github.actor }}
-        password: ${{ secrets.MY_PAT }}
+        registry: ${{ env.CI_REGISTRY }}
+        username: ${{ env.CI_REGISTRY_USER }}
+        password: ${{ env.CI_JOB_TOKEN }}
 
 
     - name: Setup environment variables
