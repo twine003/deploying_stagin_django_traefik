@@ -89,10 +89,10 @@ jobs:
 
     - name: Copy files via SSH
       run: | 
-        ls -lsa
         scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.develop.yml ${SERVER_USER}@${SERVER_IP}:/root
 
     - name: Deploy
       run: |
+        ls -lsa
         chmod +x ./deploy.sh
         ssh ${SERVER_USER}@${SERVER_IP} "bash ./deploy.sh"
