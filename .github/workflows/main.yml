@@ -63,16 +63,17 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+    - name: Add known hosts  
+      run: |
+        ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
+        chmod 644 ~/.ssh/known_hosts
+
     - name: Install SSH key 
       uses: shimataro/ssh-key-action@v2
       with:
         key: ${{ secrets.SERVER_SSH_KEY }}
         name: id_rsa
-        
-    - name: Add known hosts  
-      run: |
-        ssh-keyscan -H ${{ secrets.SERVER_IP }} >> ~/.ssh/known_hosts
-        chmod 644 ~/.ssh/known_hosts
+        known_hosts: ~/.ssh/known_hosts
 
     - name: Copy files via SSH
       env:
