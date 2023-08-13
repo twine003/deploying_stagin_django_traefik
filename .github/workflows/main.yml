@@ -89,7 +89,7 @@ jobs:
 
     - name: Copy files via SSH
       run: | 
-        scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.develop.yml ${SERVER_USER}@${SERVER_IP}:/root
+        scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.stagin.yml ${SERVER_USER}@${SERVER_IP}:/root
 
     - name: Deploy
       run: |
