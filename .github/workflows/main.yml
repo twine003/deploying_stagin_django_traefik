@@ -11,6 +11,7 @@ env:
   SITE_URL: ${{ secrets.SITE_URL }}
   POSTGRES_DB: ${{ secrets.SQL_DATABASE }}
   POSTGRES_USER: ${{ secrets.SQL_USER }}
+  SERVER_USER: ${{ secrets.SERVER_USER }}  
   SERVER_IP: ${{ secrets.SERVER_IP }}
   POSTGRES_PASSWORD: ${{ secrets.SQL_PASSWORD }}
   SQL_HOST: db
@@ -87,16 +88,11 @@ jobs:
         cat ./.env
 
     - name: Copy files via SSH
-      env:
-        SERVER_USER: ${{ secrets.SERVER_USER }}  
-        SERVER_IP: ${{ secrets.SERVER_IP }}
       run: | 
         ls -lsa
         scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.develop.yml ${SERVER_USER}@${SERVER_IP}:/root
 
     - name: Deploy
-      env:
-        SERVER_USER: ${{ secrets.SERVER_USER }}
-        SERVER_IP: ${{ secrets.SERVER_IP }}  
       run: |
+        chmod +x ./deploy.sh
         ssh ${SERVER_USER}@${SERVER_IP} "bash ./deploy.sh"
