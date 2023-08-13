@@ -8,6 +8,6 @@ ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << 'ENDSSH'
   docker pull $NGINX_IMAGE
   pwd
   ls -lsa
-  docker-compose -f docker-compose.prod.traefik.yml up -d --force-recreate --build
+  docker-compose -f docker-compose.develop.yml up -d --force-recreate --build
   docker image prune -a --filter "until=15m"
 ENDSSH
