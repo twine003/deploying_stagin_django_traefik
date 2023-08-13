@@ -81,7 +81,7 @@ jobs:
         SERVER_USER: ${{ secrets.SERVER_USER }}  
         SERVER_IP: ${{ secrets.SERVER_IP }}
       run: | 
-        scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.traefik.yml ${SERVER_USER}@${SERVER_IP}:/home/app
+        scp -o StrictHostKeyChecking=no -r ./.env ./docker-compose.prod.traefik.yml ${SERVER_USER}@${SERVER_IP}:/root
 
     - name: Deploy
       env:
