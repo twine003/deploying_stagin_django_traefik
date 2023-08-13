@@ -93,6 +93,5 @@ jobs:
 
     - name: Deploy
       run: |
-        ls -lsa
         chmod +x ./deploy.sh
-        ssh ${SERVER_USER}@${SERVER_IP} "bash ./deploy.sh"
+        bash ./deploy.sh
