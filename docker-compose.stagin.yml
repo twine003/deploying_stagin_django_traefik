@@ -10,7 +10,7 @@ services:
     expose:
       - "8000/tcp"
     env_file: .env
-    depends_on:
+    depends_on: 
       - db
       - rabbitmq
 
@@ -23,8 +23,9 @@ services:
       - "80/tcp"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.yourdomain.rule=Host(`yourdomain.com`, `www.yourdomain.com`)"
-      - "traefik.http.routers.yourdomain.entrypoints=websecure"  
+      - "traefik.http.routers.yourdomain.rule=Host(`${SERVER_IP}`)"
+      - "traefik.http.routers.yourdomain.entrypoints=web" # for staging
+      # - "traefik.http.routers.yourdomain.entrypoints=websecure"  # for production
       - "traefik.http.routers.yourdomain.tls.certresolver=myresolver"
       - "traefik.http.routers.yourdomain.middlewares=redirectIP@docker"
     depends_on:
@@ -34,12 +35,13 @@ services:
     image: "${TRAEFIK_IMAGE}"
     command:
       - "--api.insecure=true"
-      - "--providers.docker=true"
+      - "-- providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.websecure.address=:443"
-      - "--certificatesresolvers.myresolver.acme.tlschallenge=true"
-      - "--certificatesresolvers.myresolver.acme.email=your_email@yourdomain.com"
-      - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"
+      - "--entrypoints.web.address=:80"
+      # - "--entrypoints.websecure.address=:443"   # for production ssl
+      # - "--certificatesresolvers.myresolver.acme.tlschallenge=true"   # for production ssl
+      # - "--certificatesresolvers.myresolver.acme.email=your_email@yourdomain.com"   # for production ssl
+      # - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"   # for production ssl
       - "--accesslog=true"
       - "--accesslog.filepath=/logs/access.log"
       
