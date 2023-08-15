@@ -8,7 +8,7 @@ services:
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
     expose:
-      - 8000:8000
+      - "8000:8000"
     env_file: .env
     depends_on:
       - db
@@ -20,7 +20,7 @@ services:
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
     ports:
-      - 80:80
+      - "80:80"
     labels:
       - "traefik.enable=true"
       - "traefik.http.routers.capitli.rule=Host(`yourdomain.com`, `www.yourdomain.com`)"

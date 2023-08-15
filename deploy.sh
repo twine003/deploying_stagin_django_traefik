@@ -1,8 +1,12 @@
 #!/bin/sh
 
-ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << 'ENDSSH'
+ssh -o  -T StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << 'ENDSSH'
   cd /root
   export $(cat .env | xargs)
+  echo $CI_REGISTRY_USER
+  echo $CI_JOB_TOKEN
+  echo $CI_REGISTRY
+  env
   docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
   docker pull $WEB_IMAGE
   docker pull $NGINX_IMAGE
