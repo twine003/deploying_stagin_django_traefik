@@ -27,7 +27,7 @@ services:
       - "traefik.http.routers.yourdomain.entrypoints=web" # for staging
       # - "traefik.http.routers.yourdomain.entrypoints=websecure"  # for production
       # - "traefik.http.routers.yourdomain.tls.certresolver=myresolver"  # for production
-      - "traefik.http.routers.yourdomain.middlewares=redirectIP@docker"
+      # - "traefik.http.routers.yourdomain.middlewares=redirectIP@docker"
     depends_on:
       - web
 
