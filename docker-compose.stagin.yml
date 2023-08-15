@@ -26,7 +26,7 @@ services:
       - "traefik.http.routers.yourdomain.rule=Host(`${SERVER_IP}`)"
       - "traefik.http.routers.yourdomain.entrypoints=web" # for staging
       # - "traefik.http.routers.yourdomain.entrypoints=websecure"  # for production
-      - "traefik.http.routers.yourdomain.tls.certresolver=myresolver"
+      # - "traefik.http.routers.yourdomain.tls.certresolver=myresolver"  # for production
       - "traefik.http.routers.yourdomain.middlewares=redirectIP@docker"
     depends_on:
       - web
@@ -35,7 +35,7 @@ services:
     image: "${TRAEFIK_IMAGE}"
     command:
       - "--api.insecure=true"
-      - "-- providers.docker=true"
+      - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
       - "--entrypoints.web.address=:80"
       # - "--entrypoints.websecure.address=:443"   # for production ssl
