@@ -1,6 +1,6 @@
 #!/bin/sh
 
-ssh -o  -T StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << 'ENDSSH'
+ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << 'ENDSSH'
   cd /root
   export $(cat .env | xargs)
   echo $CI_REGISTRY_USER
