@@ -10,6 +10,7 @@ ssh -o StrictHostKeyChecking=no $SERVER_USER@$SERVER_IP << 'ENDSSH'
   docker login -u $CI_REGISTRY_USER -p $CI_JOB_TOKEN $CI_REGISTRY
   docker pull $WEB_IMAGE
   docker pull $NGINX_IMAGE
+  docker pull $TRAEFIK_IMAGE
   docker-compose -f docker-compose.stagin.yml up -d --force-recreate --build
   docker image prune -a --filter "until=15m"
 ENDSSH

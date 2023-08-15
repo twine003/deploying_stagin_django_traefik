@@ -8,7 +8,7 @@ services:
       - static_volume:/usr/src/app/static
       - media_volume:/usr/src/app/media
     expose:
-      - "8000:8000"
+      - 8000:8000
     env_file: .env
     depends_on:
       - db
@@ -20,13 +20,13 @@ services:
       - static_volume:/usr/src/app/staticfiles
       - media_volume:/usr/src/app/mediafiles
     ports:
-      - "80:80"
+      - 80:80
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.capitli.rule=Host(`yourdomain.com`, `www.yourdomain.com`)"
-      - "traefik.http.routers.capitli.entrypoints=websecure"  
-      - "traefik.http.routers.capitli.tls.certresolver=myresolver"
-      - "traefik.http.routers.capitli.middlewares=redirectIP@docker"
+      - "traefik.http.routers.yourdomain.rule=Host(`yourdomain.com`, `www.yourdomain.com`)"
+      - "traefik.http.routers.yourdomain.entrypoints=websecure"  
+      - "traefik.http.routers.yourdomain.tls.certresolver=myresolver"
+      - "traefik.http.routers.yourdomain.middlewares=redirectIP@docker"
     depends_on:
       - web
 
@@ -44,8 +44,8 @@ services:
       - "--accesslog.filepath=/logs/access.log"
       
     ports:
-      - "8080:8080"
-      - "443:443"
+      - 8080:8080
+      - 443:443
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./letsencrypt:/letsencrypt"
@@ -62,8 +62,8 @@ services:
     image: rabbitmq:3.8
     hostname: rabbitmq
     ports:
-      - "5672:5672"  # Puerto para la comunicación con Celery
-      - "15672:15672" # Puerto para la administración de Celery
+      - 5672:5672  # Puerto para la comunicación con Celery
+      - 15672:15672 # Puerto para la administración de Celery
     environment:
       - RABBITMQ_DEFAULT_USER=guest
       - RABBITMQ_DEFAULT_PASS=guest 
