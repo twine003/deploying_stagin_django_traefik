@@ -37,7 +37,7 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:80"
+      - "--entrypoints.web.address=:443"
       # - "--entrypoints.websecure.address=:443"   # for production ssl
       # - "--certificatesresolvers.myresolver.acme.tlschallenge=true"   # for production ssl
       # - "--certificatesresolvers.myresolver.acme.email=your_email@yourdomain.com"   # for production ssl
