@@ -45,10 +45,10 @@ services:
       # - "--certificatesresolvers.myresolver.acme.storage=/letsencrypt/acme.json"   # for production ssl
       - "--accesslog=true"
       - "--accesslog.filepath=/logs/access.log"
-      
     ports:
-      - "8080/tcp"
-      - "443/tcp"
+      - "8080:8080"
+      - "443:443"
+      - "80:80"
     volumes:
       - "/var/run/docker.sock:/var/run/docker.sock:ro"
       - "./letsencrypt:/letsencrypt"
