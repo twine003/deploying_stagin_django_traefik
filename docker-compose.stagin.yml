@@ -23,8 +23,9 @@ services:
       - "80/tcp"
     labels:
       - "traefik.enable=true"
-      - "traefik.http.routers.yourdomain.rule=Host(`${SERVER_IP}`)"
-      - "traefik.http.routers.yourdomain.entrypoints=web" # for staging
+      - "traefik.http.routers.nginx.rule=Host(`${SERVER_IP}`)"
+      - "traefik.http.routers.nginx.entrypoints=web" # for staging
+      - "traefik.http.services.nginx.loadbalancer.server.port=80"
       # - "traefik.http.routers.yourdomain.entrypoints=websecure"  # for production
       # - "traefik.http.routers.yourdomain.tls.certresolver=myresolver"  # for production
       # - "traefik.http.routers.yourdomain.middlewares=redirectIP@docker"
@@ -37,7 +38,7 @@ services:
       - "--api.insecure=true"
       - "--providers.docker=true"
       - "--providers.docker.exposedbydefault=false"
-      - "--entrypoints.web.address=:443"
+      - "--entrypoints.web.address=:80"
       # - "--entrypoints.websecure.address=:443"   # for production ssl
       # - "--certificatesresolvers.myresolver.acme.tlschallenge=true"   # for production ssl
       # - "--certificatesresolvers.myresolver.acme.email=your_email@yourdomain.com"   # for production ssl
