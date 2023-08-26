@@ -23,6 +23,7 @@ env:
   CI_REGISTRY_USER:  ${{ github.actor }}
   CI_JOB_TOKEN: ${{ secrets.MY_PAT }}
   CI_REGISTRY: ghcr.io
+  CELERY_BROKER_URL: "amqp://guest:guest@rabbitmq:5672/" # ${{ secrets.CELERY_BROKER_URL }} You can use a secret variable
 
 jobs:
 

@@ -140,3 +140,16 @@ MEDIA_URL = '/media/'
 # https://docs.djangoproject.com/en/4.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# CONFIGURE CELERY
+CELERY_BROKER_URL = os.environ.get('CELERY_BROKER_URL',None)
+if CELERY_BROKER_URL:
+    INSTALLED_APPS += [
+        'django_celery_results',
+        'django_celery_beat',
+    ]
+    CELERY_RESULT_BACKEND = os.environ.get('CELERY_RESULT_BACKEND',"django-db")
+    CELERY_ACCEPT_CONTENT = ['application/json']
+    CELERY_TASK_SERIALIZER = 'json'
+    CELERY_RESULT_SERIALIZER = 'json'
+    CELERY_BEAT_SCHEDULER = 'django_celery_beat.schedulers:DatabaseScheduler'
